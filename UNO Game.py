@@ -69,6 +69,7 @@ class Hand:
             self.number_cards += 1
         else:
             self.action_cards += 1
+        self.sort_cards()
 
     def remove_card(self, place):
         self.cardsstr.pop(place - 1)
@@ -83,6 +84,12 @@ class Hand:
 
     def no_of_cards(self):
         return len(self.cards)
+
+    def sort_cards(self):
+        self.cards.sort(key=lambda card: (
+            card.color if card.color is not None else '',
+            int(card.rank) if card.cardtype == 'number' and card.rank is not None else 0))
+        self.cardsstr = [str(card) for card in self.cards]
 
 
 #Funciton to randomly select who starts first
@@ -161,9 +168,19 @@ while True:
             print('\nTop card is: ' + str(top_card))
             print('\nYour cards: ')
             player_hand.cards_in_hand()
+            # Check if card in hand is playable
+            playableHand = False
+            for i in range (len(player_hand.cardsstr)):
+                if single_card_check(top_card, player_hand.single_card(i)):
+                    playableHand = True
+
             if player_hand.no_of_cards() == 1:
                 print('Player yells UNO!!')
-            choice = input("\nHit/Card# or Pull/Draw? (h/p): ")
+            if not playableHand:
+                print('You dont have any playable card, drawing from deck')
+                choice = 'd'
+            else: 
+                choice = input("\nHit/Card# or Pull/Draw? (h/p): ")
             if choice.lower().startswith('h') or choice.isnumeric():
                 if choice.isnumeric():
                     pos = int(choice)
@@ -228,8 +245,6 @@ while True:
                 break
 
         if turn == 'Pc':
-            if pc_hand.no_of_cards() == 1:
-                print('PC Yells UNO!!')
             temp_card = full_hand_check(pc_hand, top_card)
             time.sleep(1)
             if temp_card != 'no card':
@@ -255,12 +270,16 @@ while True:
                             player_hand.add_card(deck.deal())
                         top_card = temp_card
                         draw4color = pc_hand.cards[0].color
+                        if pc_hand.cards[0].color is None:
+                            pc_hand.cards[0].color = random.choice(color)
                         print('Color changes to', draw4color)
                         top_card.color = draw4color
                         turn = 'Player'
                     elif temp_card.rank == 'Wild':
                         top_card = temp_card
                         wildcolor = pc_hand.cards[0].color
+                        if pc_hand.cards[0].color is None:
+                            pc_hand.cards[0].color = random.choice(color)
                         print("Color changes to", wildcolor)
                         top_card.color = wildcolor
                         turn = 'Player'
@@ -306,6 +325,8 @@ while True:
                     pc_hand.add_card(temp_card)
                     turn = 'Player'
             print('\nPC has {} cards remaining'.format(pc_hand.no_of_cards()))
+            if pc_hand.no_of_cards() == 1:
+                print('PC Yells UNO!!')
             print('Player has {} cards remaining'.format(player_hand.no_of_cards()))
             time.sleep(1)
             if win_check(pc_hand):
