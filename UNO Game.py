@@ -168,7 +168,7 @@ while True:
                     print('Your cards: ')
                     player_hand.cards_in_hand()
             choice = input("\nHit/Card# or Pull/Draw? (h/p): ")
-            if choice == 'h' or choice.isnumeric():
+            if choice.lower().startswith('h') or choice.isnumeric():
                 if choice.isnumeric():
                     pos = int(choice)
                 else:
@@ -208,7 +208,7 @@ while True:
                             turn = 'Pc'
                 else:
                     print('This card cannot be used')
-            elif choice == 'p':
+            elif choice.lower().startswith('p') or choice.lower().startswith('d'):
                 temp_card = deck.deal()
                 print('You got: ' + str(temp_card))
                 time.sleep(1)
