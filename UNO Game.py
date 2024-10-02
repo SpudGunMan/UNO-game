@@ -159,7 +159,7 @@ while True:
 
         if turn == 'Player':
             print('\nTop card is: ' + str(top_card))
-            print('Your cards: ')
+            print('\nYour cards: ')
             player_hand.cards_in_hand()
             if player_hand.no_of_cards() == 1:
                 if last_card_check(player_hand):
@@ -197,6 +197,10 @@ while True:
                             draw4color = input('Change color to: ')
                             if draw4color != draw4color.upper():
                                 draw4color = draw4color.upper()
+                            # assume single character first letter of color
+                            if draw4color[0] in [c[0] for c in color]:
+                                draw4color = [c for c in color if c[0] == draw4color[0]][0]
+                                print('Color changes to', draw4color)
                             top_card.color = draw4color
                             turn = 'Pc'
                         elif temp_card.rank == 'Wild':
@@ -204,6 +208,10 @@ while True:
                             wildcolor = input('Change color to: ')
                             if wildcolor != wildcolor.upper():
                                 wildcolor = wildcolor.upper()
+                            # assume single character first letter of color
+                            if wildcolor[0] in [c[0] for c in color]:
+                                wildcolor = [c for c in color if c[0] == wildcolor[0]][0]
+                                print('Color changes to', wildcolor)
                             top_card.color = wildcolor
                             turn = 'Pc'
                 else:
@@ -305,6 +313,7 @@ while True:
                     pc_hand.add_card(temp_card)
                     turn = 'Player'
             print('\nPC has {} cards remaining'.format(pc_hand.no_of_cards()))
+            print('Player has {} cards remaining'.format(player_hand.no_of_cards()))
             time.sleep(1)
             if win_check(pc_hand):
                 print('\nPC WON!!')
