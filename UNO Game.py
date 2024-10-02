@@ -167,9 +167,12 @@ while True:
                     player_hand.add_card(deck.deal())
                     print('Your cards: ')
                     player_hand.cards_in_hand()
-            choice = input("\nHit or Pull? (h/p): ")
-            if choice == 'h':
-                pos = int(input('Enter index of card: '))
+            choice = input("\nHit or Pull/Card#? (h/p): ")
+            if choice == 'h' or choice.isnumeric():
+                if choice.isnumeric():
+                    pos = int(choice)
+                else:
+                    pos = int(input('Enter index of card: '))
                 temp_card = player_hand.single_card(pos)
                 if single_card_check(top_card, temp_card):
                     if temp_card.cardtype == 'number':
@@ -186,19 +189,19 @@ while True:
                             pc_hand.add_card(deck.deal())
                             pc_hand.add_card(deck.deal())
                             top_card = player_hand.remove_card(pos)
-                            turn = 'Player'
+                            turn = 'Pc'
                         elif temp_card.rank == 'Draw4':
                             for i in range(4):
                                 pc_hand.add_card(deck.deal())
                             top_card = player_hand.remove_card(pos)
-                            draw4color = input('Change color to (enter in caps): ')
+                            draw4color = input('Change color to: ')
                             if draw4color != draw4color.upper():
                                 draw4color = draw4color.upper()
                             top_card.color = draw4color
-                            turn = 'Player'
+                            turn = 'Pc'
                         elif temp_card.rank == 'Wild':
                             top_card = player_hand.remove_card(pos)
-                            wildcolor = input('Change color to (enter in caps): ')
+                            wildcolor = input('Change color to: ')
                             if wildcolor != wildcolor.upper():
                                 wildcolor = wildcolor.upper()
                             top_card.color = wildcolor
@@ -245,7 +248,7 @@ while True:
                         player_hand.add_card(deck.deal())
                         player_hand.add_card(deck.deal())
                         top_card = temp_card
-                        turn = 'Pc'
+                        turn = 'Player'
                     elif temp_card.rank == 'Draw4':
                         for i in range(4):
                             player_hand.add_card(deck.deal())
@@ -253,7 +256,7 @@ while True:
                         draw4color = pc_hand.cards[0].color
                         print('Color changes to', draw4color)
                         top_card.color = draw4color
-                        turn = 'Pc'
+                        turn = 'Player'
                     elif temp_card.rank == 'Wild':
                         top_card = temp_card
                         wildcolor = pc_hand.cards[0].color
@@ -281,7 +284,7 @@ while True:
                             player_hand.add_card(deck.deal())
                             player_hand.add_card(deck.deal())
                             top_card = temp_card
-                            turn = 'Pc'
+                            turn = 'Player'
                         elif temp_card.rank == 'Draw4':
                             for i in range(4):
                                 player_hand.add_card(deck.deal())
@@ -289,7 +292,7 @@ while True:
                             draw4color = pc_hand.cards[0].color
                             print('Color changes to', draw4color)
                             top_card.color = draw4color
-                            turn = 'Pc'
+                            turn = 'Player'
                         elif temp_card.rank == 'Wild':
                             top_card = temp_card
                             wildcolor = pc_hand.cards[0].color
