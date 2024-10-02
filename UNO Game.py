@@ -162,11 +162,7 @@ while True:
             print('\nYour cards: ')
             player_hand.cards_in_hand()
             if player_hand.no_of_cards() == 1:
-                if last_card_check(player_hand):
-                    print('Last card cannot be action card \nAdding one card from deck')
-                    player_hand.add_card(deck.deal())
-                    print('Your cards: ')
-                    player_hand.cards_in_hand()
+                print('Player yells UNO!!')
             choice = input("\nHit/Card# or Pull/Draw? (h/p): ")
             if choice.lower().startswith('h') or choice.isnumeric():
                 if choice.isnumeric():
@@ -215,7 +211,7 @@ while True:
                             top_card.color = wildcolor
                             turn = 'Pc'
                 else:
-                    print('This card cannot be used')
+                    print('{} cannot be used on {}'.format(temp_card, top_card))
             elif choice.lower().startswith('p') or choice.lower().startswith('d'):
                 temp_card = deck.deal()
                 print('You got: ' + str(temp_card))
@@ -233,10 +229,7 @@ while True:
 
         if turn == 'Pc':
             if pc_hand.no_of_cards() == 1:
-                if last_card_check(pc_hand):
-                    time.sleep(1)
-                    print('Adding a card to PC hand')
-                    pc_hand.add_card(deck.deal())
+                print('PC Yells UNO!!')
             temp_card = full_hand_check(pc_hand, top_card)
             time.sleep(1)
             if temp_card != 'no card':
