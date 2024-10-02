@@ -103,9 +103,6 @@ def choose_first():
     return random_player
 
 def single_card_check(top_card, card):
-    special_rank = ('Wild', 'Draw4', 'Draw2', 'Skip', 'Reverse')
-    if top_card.rank in special_rank:
-        return True
     if card.color == top_card.color or top_card.rank == card.rank or card.cardtype == 'action_nocolor':
         return True
     else:
