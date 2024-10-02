@@ -175,11 +175,11 @@ while True:
 
             if hands[player].no_of_cards() == 1:
                 print('{} Yells UNO!!'.format(player))
-            if not playableHand:
-                print('{} doesn\'t have a card'.format(player))
-                choice = 'd'
-            else:
-                choice = input("\nHit/Card# or Pull/Draw? (h/p): ")
+            # if not playableHand:
+            #     print('{} doesn\'t have a card'.format(player))
+            #     choice = 'd'
+            # else:
+            choice = input("\nHit/Card# or Pull/Draw? (h/p): ")
             if choice.lower().startswith('h') or choice.isnumeric():
                 if choice.isnumeric():
                     pos = int(choice)
