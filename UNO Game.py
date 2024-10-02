@@ -167,7 +167,7 @@ while True:
                     player_hand.add_card(deck.deal())
                     print('Your cards: ')
                     player_hand.cards_in_hand()
-            choice = input("\nHit or Pull/Card#? (h/p): ")
+            choice = input("\nHit/Card# or Pull/Draw? (h/p): ")
             if choice == 'h' or choice.isnumeric():
                 if choice.isnumeric():
                     pos = int(choice)
